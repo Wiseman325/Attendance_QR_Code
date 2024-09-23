@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherModel {
-    public  int id;
-    public  String name;
-    public String user;
-    public  String pass;
+    private int id;
+    private String name;
+    private String user;
+    private String pass;
 
+    // Constructor with parameters
     public TeacherModel(int id, String name, String user, String pass) {
         this.id = id;
         this.name = name;
@@ -16,10 +17,11 @@ public class TeacherModel {
         this.pass = pass;
     }
 
+    // Default constructor
     public TeacherModel() {
     }
 
-
+    // Override toString for easier debugging
     @Override
     public String toString() {
         return "TeacherModel{" +
@@ -30,6 +32,7 @@ public class TeacherModel {
                 '}';
     }
 
+    // Getter and Setter methods
     public int getId() {
         return id;
     }
@@ -62,10 +65,9 @@ public class TeacherModel {
         this.pass = pass;
     }
 
-
-    public   List<TeacherModel> getteacher() {
+    // Temporary method for testing purposes to return a list of teachers
+    public List<TeacherModel> getTeachers() {
         List<TeacherModel> teachers = new ArrayList<>();
-
         teachers.add(new TeacherModel(1, "Kamil", "kamil123", "123"));
         teachers.add(new TeacherModel(2, "Riad", "riad456", "123"));
         teachers.add(new TeacherModel(3, "Ahmed", "ahmed24", "123"));
@@ -73,6 +75,4 @@ public class TeacherModel {
 
         return teachers;
     }
-
 }
-

@@ -3,12 +3,9 @@ package com.example.myapplication;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class DataBaseHapler extends SQLiteOpenHelper {
     }
 
 
-    public  boolean AddOne_Student(StudnetModel model)
+    public  boolean AddOne_Student(StudentModel model)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues value = new ContentValues();
@@ -104,65 +101,36 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         }
     }
 
-
-    public List<StudnetModel> getAllstudent()
-    {
-        List<StudnetModel> studnetModels = new ArrayList<>();
-
-        String query = "SELECT * FROM STUDENTS_TABLE";
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(query,null);
-
-        if(cursor.moveToFirst())
-        {
-            do {
-                int id = cursor.getInt(0);
-                String name= cursor.getString(1);
-                String user= cursor.getString(2);
-                String pass= cursor.getString(3);
-
-                StudnetModel studnetModel =new StudnetModel(id,name,user,pass);
-                studnetModels.add(studnetModel);
-            }while (cursor.moveToNext());
-        }
-        else
-        {
-           System.out.println("the DB is not have any object yet ! ");
-
-        }
-        cursor.close();
-        db.close();
-        return studnetModels;
+    public List<StudentModel> getAllStudents() {
+        return getStudents(); // Call to your method to retrieve hard-coded students
     }
+
+    public List<StudentModel> getStudents() {
+        List<StudentModel> students = new ArrayList<>();
+        students.add(new StudentModel(1, "John", "john123", "123"));
+        students.add(new StudentModel(2, "Alice", "alice456", "123"));
+        students.add(new StudentModel(3, "Bob", "bob789", "123"));
+        students.add(new StudentModel(4, "Emily", "emily321", "123"));
+
+        return students; // Correct the return statement to return students
+    }
+
+
+
 
     public List<TeacherModel> getAllTeachers()
     {
-        List<TeacherModel> teacherModels = new ArrayList<>();
-        String query = "SELECT * FROM TEACHER_TABLE";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query,null);
+        return getTeachers();
+    }
 
-        if(cursor.moveToFirst())
-        {
-            do {
-                int id = cursor.getInt(0);
-                String name= cursor.getString(1);
-                String user= cursor.getString(2);
-                String pass= cursor.getString(3);
+    public List<TeacherModel> getTeachers() {
+        List<TeacherModel> teachers = new ArrayList<>();
+        teachers.add(new TeacherModel(1, "Kamil", "kamil123", "123"));
+        teachers.add(new TeacherModel(2, "Riad", "riad456", "123"));
+        teachers.add(new TeacherModel(3, "Ahmed", "ahmed24", "123"));
+        teachers.add(new TeacherModel(4, "Ali", "ali322", "123"));
 
-                TeacherModel teacherModel =new TeacherModel(id,name,user,pass);
-                teacherModels.add(teacherModel);
-            }while (cursor.moveToNext());
-        }
-        else
-        {
-
-        }
-        cursor.close();
-        db.close();
-        return teacherModels;
+        return teachers;
     }
 
     public List<AttendanceModel> getAllAttendance()

@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,7 +16,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (user.getText() == null || pass.getText() ==null )
-                {
+                if (user.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(MainActivity.this, "Please input username and password", Toast.LENGTH_SHORT).show();
                 }
+
                 else
                 {
                     String selectedRole = spinner.getSelectedItem().toString();
@@ -83,63 +81,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void check(int role, String username, String password) {
-
-
         DataBaseHapler db = new DataBaseHapler(MainActivity.this);
+        boolean found = false;
 
         if (role == 0) { // teacher
-
             List<TeacherModel> teachers = db.getAllTeachers();
-
             for (TeacherModel teacher : teachers) {
-
                 if (teacher.getUser().equals(username) && teacher.getPass().equals(password)) {
-                    // Username and password match for a teacher
+                    found = true;
                     Intent intent = new Intent(MainActivity.this, Teacher.class);
                     startActivity(intent);
+                    break;
                 }
-                else
-                {
-                    // No matching teacher found
-                  //  Toast.makeText(MainActivity.this, "user name or password is incorrect", Toast.LENGTH_SHORT).show();
-
-                }
-
+            }
+            if (!found) {
+                Toast.makeText(MainActivity.this, "Username or password is incorrect", Toast.LENGTH_SHORT).show();
             }
 
-        }
-
-
-        else if (role == 1) { // student
-
-            List<StudnetModel> students = db.getAllstudent();
-
-            for (StudnetModel student : students) {
-
+        } else if (role == 1) { // student
+            List<StudentModel> students = db.getAllStudents();
+            for (StudentModel student : students) {
                 if (student.getUser().equals(username) && student.getPass().equals(password)) {
-
-                    // Username and password match for a student
-                   if (addname(student.getName()))
-                   {
-                       Intent intent = new Intent(MainActivity.this, ScannerQR.class);
-                       startActivity(intent);
-                   }
-
-                }
-                else
-                {
-                    // No matching student found
-                   // Toast.makeText(MainActivity.this, "user name or password is incorrect", Toast.LENGTH_SHORT).show();
-
+                    found = true;
+                    if (addname(student.getName())) {
+                        Intent intent = new Intent(MainActivity.this, ScannerQR.class);
+                        startActivity(intent);
+                    }
+                    break;
                 }
             }
-           }
-
-        else {
-            // Invalid role
+            if (!found) {
+                Toast.makeText(MainActivity.this, "Username or password is incorrect", Toast.LENGTH_SHORT).show();
+            }
+        } else {
             Toast.makeText(MainActivity.this, "Invalid role, please try again", Toast.LENGTH_SHORT).show();
-         }
+        }
     }
+
 
     private  boolean addname(String name)
     {

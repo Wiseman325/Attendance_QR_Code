@@ -3,26 +3,29 @@ package com.example.myapplication;
 import java.util.ArrayList;
 import java.util.List;
 
-public   class StudnetModel {
-    public  int id;
-    public  String name;
-    public String user;
-    public  String pass;
+public class StudentModel {
+    private int id;
+    private String name;
+    private String user;
+    private String pass;
 
-    public StudnetModel(int id, String name, String user, String pass) {
+
+    // Constructor with 'id' (for existing students)
+    public StudentModel(int id, String name, String user, String pass) {
         this.id = id;
         this.name = name;
         this.user = user;
         this.pass = pass;
     }
 
-    public StudnetModel( ) {
-
+    // Default constructor
+    public StudentModel() {
     }
 
+    // Override toString to display StudentModel details
     @Override
     public String toString() {
-        return "StudnetModel{" +
+        return "StudentModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", user='" + user + '\'' +
@@ -30,6 +33,7 @@ public   class StudnetModel {
                 '}';
     }
 
+    // Getter and Setter methods
     public int getId() {
         return id;
     }
@@ -61,14 +65,15 @@ public   class StudnetModel {
     public void setPass(String pass) {
         this.pass = pass;
     }
-    public  List<StudnetModel> getStudents() {
-        List<StudnetModel> students = new ArrayList<>();
-        students.add(new StudnetModel(1, "John", "john123", "123"));
-        students.add(new StudnetModel(2, "Alice", "alice456", "123"));
-        students.add(new StudnetModel(3, "Bob", "bob789", "123"));
-        students.add(new StudnetModel(4, "Emily", "emily321", "123"));
 
-        return students;
+    // Test method to simulate fetching a list of students
+    public List<StudentModel> getStudents() {
+        List<StudentModel> students = new ArrayList<>();
+        students.add(new StudentModel(1, "John", "john123", "123"));
+        students.add(new StudentModel(2, "Alice", "alice456", "123"));
+        students.add(new StudentModel(3, "Bob", "bob789", "123"));
+        students.add(new StudentModel(4, "Emily", "emily321", "123"));
+
+        return getStudents();
     }
-
 }

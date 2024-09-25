@@ -17,6 +17,11 @@ public class StudentModel {
         this.user = user;
         this.pass = pass;
     }
+    public StudentModel(int id, String name, String user) {
+        this.id = id;
+        this.name = name;
+        this.user = user;
+    }
 
     // Default constructor
     public StudentModel() {

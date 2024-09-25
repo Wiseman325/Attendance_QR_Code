@@ -18,10 +18,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.List;
 
+// Import ScannerQR class
+import com.example.myapplication.ScannerQR;
+
 public class MainActivity extends AppCompatActivity {
     Button btnsubmit;
-    EditText user,pass;
+    EditText user, pass;
     SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, rols);
         spinner.setAdapter(adapter);
 
-
         user = findViewById(R.id.user);
         pass = findViewById(R.id.pass);
 
@@ -50,34 +53,26 @@ public class MainActivity extends AppCompatActivity {
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (user.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(MainActivity.this, "Please input username and password", Toast.LENGTH_SHORT).show();
-                }
-
-                else
-                {
+                } else {
                     String selectedRole = spinner.getSelectedItem().toString();
 
                     if (selectedRole.equals("Student")) {
                         // Start ScannerQRActivity
-                        check(1 , user.getText().toString().toLowerCase() , pass.getText().toString().toLowerCase() );
+                        check(1, user.getText().toString().toLowerCase(), pass.getText().toString().toLowerCase());
 
                     } else if (selectedRole.equals("Teacher")) {
                         // Start GenerateQRActivity
-                       check(0 , user.getText().toString().toLowerCase() , pass.getText().toString().toLowerCase() );
+                        check(0, user.getText().toString().toLowerCase(), pass.getText().toString().toLowerCase());
 
                     } else {
                         // Show toast message to select a role
                         Toast.makeText(MainActivity.this, "Please select a role", Toast.LENGTH_SHORT).show();
                     }
                 }
-
             }
         });
-
-
-
     }
 
     public void check(int role, String username, String password) {
@@ -104,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 if (student.getUser().equals(username) && student.getPass().equals(password)) {
                     found = true;
                     if (addname(student.getName())) {
-                        Intent intent = new Intent(MainActivity.this, ScannerQR.class);
+                        Intent intent = new Intent(MainActivity.this, ScannerQR.class);  // Correct import needed here
                         startActivity(intent);
                     }
                     break;
@@ -118,15 +113,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    private  boolean addname(String name)
-    {
+    private boolean addname(String name) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("name", name);
         editor.apply();
         return true;
     }
-
-
-
 }

@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                         // Start GenerateQRActivity
                         check(0, user.getText().toString().toLowerCase(), pass.getText().toString().toLowerCase());
 
+                    } else if (selectedRole.equals("Security")) {
+                        // Handle Security role
+                        check(2, user.getText().toString().toLowerCase(), pass.getText().toString().toLowerCase());
                     } else {
                         // Show toast message to select a role
                         Toast.makeText(MainActivity.this, "Please select a role", Toast.LENGTH_SHORT).show();
@@ -99,7 +102,23 @@ public class MainActivity extends AppCompatActivity {
                 if (student.getUser().equals(username) && student.getPass().equals(password)) {
                     found = true;
                     if (addname(student.getName())) {
-                        Intent intent = new Intent(MainActivity.this, ScannerQR.class);  // Correct import needed here
+                        Intent intent = new Intent(MainActivity.this, ScannerQR.class);  // Class for scanning QR codes
+                        startActivity(intent);
+                    }
+                    break;
+                }
+            }
+            if (!found) {
+                Toast.makeText(MainActivity.this, "Username or password is incorrect", Toast.LENGTH_SHORT).show();
+            }
+
+        } else if (role == 2) { // Security
+            List<SecurityModel> securities = db.getAllSecurities();
+            for (SecurityModel security : securities) {
+                if (security.getUser().equals(username) && security.getPass().equals(password)) {
+                    found = true;
+                    if (addname(security.getName())) {
+                        Intent intent = new Intent(MainActivity.this, Security.class);  // Class for Security role
                         startActivity(intent);
                     }
                     break;

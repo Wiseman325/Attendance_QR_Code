@@ -116,6 +116,18 @@ public class DataBaseHapler extends SQLiteOpenHelper {
     }
 
 
+    public List<SecurityModel> getAllSecurities() {
+        List<SecurityModel> securityRoles = new ArrayList<>();
+
+        // Example of how you might populate the list from a database or static data
+        securityRoles.add(new SecurityModel(1, "Admin", "sec123", "123"));
+        securityRoles.add(new SecurityModel(2, "User", "normalUser", "userPass456"));
+        securityRoles.add(new SecurityModel(3, "Guest", "guestUser", "guestPass789"));
+
+        // Return the list of all security roles
+        return securityRoles;
+    }
+
 
 
     public List<TeacherModel> getAllTeachers()
@@ -132,6 +144,8 @@ public class DataBaseHapler extends SQLiteOpenHelper {
 
         return teachers;
     }
+
+
 
     public List<AttendanceModel> getAllAttendance()
     {

@@ -21,10 +21,10 @@
         android:layout_height="120dp"
 
         />
-    <Button
-        android:id="@+id/gotoattendance"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="View attendance" />
+<!--    <Button-->
+<!--        android:id="@+id/gotoattendance"-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:text="View attendance" />-->
 
 </LinearLayout>

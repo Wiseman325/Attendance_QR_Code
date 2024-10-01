@@ -3,4 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="offwhite">#e2fdff</color>
+
+    <color name="DarkGreen">#024032</color>
+
+    <!-- Added Colours -->
+    <color name="teal_200">#00BCD4</color>
+    <color name="teal_700">#006EC6</color>
 </resources>

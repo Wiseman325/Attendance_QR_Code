@@ -23,12 +23,10 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
-        <activity
-            android:name=".Security"
-            android:exported="false" />
+
         <activity
             android:name=".Attendance"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Teacher"
             android:exported="false" />

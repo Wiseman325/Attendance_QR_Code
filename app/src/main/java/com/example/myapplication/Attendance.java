@@ -19,7 +19,7 @@ import java.util.List;
 public class Attendance extends AppCompatActivity {
 
     public ListView listView_student;
-    public Button btn_seed; Button btn_select;
+    public  Button btn_select;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,6 @@ public class Attendance extends AppCompatActivity {
 
         listView_student = findViewById(R.id.students);
 
-        btn_seed = findViewById(R.id.seed);
-        btn_seed.setVisibility(View.INVISIBLE);
 
 
         btn_select = findViewById(R.id.vlauseall);

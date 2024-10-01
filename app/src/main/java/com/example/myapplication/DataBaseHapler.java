@@ -17,9 +17,6 @@ public class DataBaseHapler extends SQLiteOpenHelper {
 
     public DataBaseHapler(@Nullable Context context  ) {
         super(context, "SystemApp.db", null, 1);
-
-
-
     }
 
     // is was call when first create DB
@@ -114,21 +111,6 @@ public class DataBaseHapler extends SQLiteOpenHelper {
 
         return students; // Correct the return statement to return students
     }
-
-
-    public List<SecurityModel> getAllSecurities() {
-        List<SecurityModel> securityRoles = new ArrayList<>();
-
-        // Example of how you might populate the list from a database or static data
-        securityRoles.add(new SecurityModel(1, "Admin", "sec123", "123"));
-        securityRoles.add(new SecurityModel(2, "User", "normalUser", "userPass456"));
-        securityRoles.add(new SecurityModel(3, "Guest", "guestUser", "guestPass789"));
-
-        // Return the list of all security roles
-        return securityRoles;
-    }
-
-
 
     public List<TeacherModel> getAllTeachers()
     {

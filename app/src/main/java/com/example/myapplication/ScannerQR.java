@@ -103,7 +103,7 @@ public class ScannerQR extends AppCompatActivity {
                 // Create the message
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(userEmail));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("recipient@example.com")); // Parent's email
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("wisemanmlora@gmail.com")); // Parent's email
                 message.setSubject("New QR Code Registration");
                 message.setText("Student Name: " + name + "\nSubject: " + subject + "\nDate: " + date);
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -22,7 +23,7 @@ public class DataBaseHapler extends SQLiteOpenHelper {
     // is was call when first create DB
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createStudentsTable = "CREATE TABLE STUDENTS_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT)";
+        String createStudentsTable = "CREATE TABLE STUDENTS_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT, EMAIL TEXT, PARENT_EMAIL TEXT)";
         String createTeacherTable = "CREATE TABLE TEACHER_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT)";
         String createAttendanceTable = "CREATE TABLE ATTENDANCE_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, STUDENTNAME TEXT, SUBJECT TEXT, DATE TEXT)";
 
@@ -32,12 +33,6 @@ public class DataBaseHapler extends SQLiteOpenHelper {
     }
 
 
-    // is call when DB version is changed
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-    }
-
 
     public  boolean AddOne_Student(StudentModel model)
     {
@@ -46,6 +41,8 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         value.put("NAME",model.getName());
         value.put("USER",model.getUser());
         value.put("PASS",model.getPass());
+        value.put("EMAIL", model.getEmail());  // Add this line
+        value.put("PARENT_EMAIL", model.getParentEmail());
 
         long insert = db.insert("STUDENTS_TABLE",null,value);
         if (insert == -1)
@@ -87,6 +84,7 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         value.put("SUBJECT",model.getSubject());
         value.put("DATE",model.getDate());
 
+
         long insert = db.insert("ATTENDANCE_TABLE",null,value);
         if (insert == -1)
         {
@@ -99,34 +97,59 @@ public class DataBaseHapler extends SQLiteOpenHelper {
     }
 
     public List<StudentModel> getAllStudents() {
-        return getStudents(); // Call to your method to retrieve hard-coded students
+        StudentModel studentModel = new StudentModel();
+        return studentModel.getStudents(); // Call to your method to retrieve hard-coded students
     }
 
-    public List<StudentModel> getStudents() {
-        List<StudentModel> students = new ArrayList<>();
-        students.add(new StudentModel(1, "John", "john123", "123"));
-        students.add(new StudentModel(2, "Alice", "alice456", "123"));
-        students.add(new StudentModel(3, "Bob", "bob789", "123"));
-        students.add(new StudentModel(4, "Emily", "emily321", "123"));
 
-        return students; // Correct the return statement to return students
+
+    public StudentModel getStudentById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        StudentModel student = null;
+
+        // Query to get student by ID
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM STUDENTS_TABLE WHERE ID = ?", new String[]{String.valueOf(id)});
+
+            // If we find a student, create a StudentModel object
+            if (cursor != null && cursor.moveToFirst()) {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("NAME"));
+                String user = cursor.getString(cursor.getColumnIndexOrThrow("USER"));
+                String pass = cursor.getString(cursor.getColumnIndexOrThrow("PASS"));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow("EMAIL"));
+                String parentEmail = cursor.getString(cursor.getColumnIndexOrThrow("PARENT_EMAIL"));
+
+                student = new StudentModel(id, name, user, pass, email, parentEmail);
+            } else {
+                Log.d("DB_DEBUG", "No student found with ID: " + id);
+            }
+        } catch (Exception e) {
+            Log.e("DB_ERROR", "Error retrieving student", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+
+        return student;
+    }
+
+
+
+
+    // is call when DB version is changed
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
     }
 
     public List<TeacherModel> getAllTeachers()
     {
-        return getTeachers();
+        TeacherModel teacherModel = new TeacherModel();
+        return teacherModel.getTeachers();
     }
-
-    public List<TeacherModel> getTeachers() {
-        List<TeacherModel> teachers = new ArrayList<>();
-        teachers.add(new TeacherModel(1, "Kamil", "kamil123", "123"));
-        teachers.add(new TeacherModel(2, "Riad", "riad456", "123"));
-        teachers.add(new TeacherModel(3, "Ahmed", "ahmed24", "123"));
-        teachers.add(new TeacherModel(4, "Ali", "ali322", "123"));
-
-        return teachers;
-    }
-
 
 
     public List<AttendanceModel> getAllAttendance()
@@ -155,6 +178,7 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return attendanceModels;
+
     }
 
 }

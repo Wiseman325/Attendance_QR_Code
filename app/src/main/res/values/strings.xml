@@ -3,11 +3,12 @@
 
 
     <array name="subjects">
-        <item>Select the Subject</item>
-        <item>Programming basics</item>
-        <item>mathematics</item>
-        <item>Databases</item>
-        <item>Network structures</item>
+        <item>Select the Class</item>
+        <item>Grade 8</item>
+        <item>Grade 9</item>
+        <item>Grade 10</item>
+        <item>Grade 11</item>
+        <item>Grade 12</item>
     </array>
 
     <array name="rols">

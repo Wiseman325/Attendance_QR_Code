@@ -48,7 +48,7 @@ public class Attendance extends AppCompatActivity {
 
                     DataBaseHapler db =new DataBaseHapler(Attendance.this);
 
-                    /*
+                     /*
                      List<StudnetModel> models = db.getAllstudent();
                      Toast.makeText(Attendance.this, "Data\n"+models.toString(), Toast.LENGTH_LONG).show();
                      ArrayAdapter arrayAdapter = new ArrayAdapter<StudnetModel>(Attendance.this , android.R.layout.simple_list_item_1,models);

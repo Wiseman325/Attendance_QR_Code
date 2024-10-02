@@ -64,9 +64,9 @@ public class GenrateQR extends AppCompatActivity {
     private void genrateQR() {
 
             String subject = spinner.getSelectedItem().toString();
-            if (subject.equals("Select the Subject"))
+            if (subject.equals("Select the Grade"))
             {
-                Toast.makeText(GenrateQR.this, "Please select a Subject !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GenrateQR.this, "Please select a Grade!", Toast.LENGTH_SHORT).show();
             }
             else
             {

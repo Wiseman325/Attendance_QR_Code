@@ -61,10 +61,9 @@ public class ScannerQR extends AppCompatActivity {
             DataBaseHapler db = new DataBaseHapler(ScannerQR.this);
             AttendanceModel attendance = new AttendanceModel(0, name, subject, date);
             boolean isSaved = db.AddOne_Attendance(attendance);
-            int id = 1;
 
             // Get the StudentModel from the database and get parent's email
-                StudentModel student = db.getStudentById(id);
+                StudentModel student = db.getStudentByName(name);
                 if (isSaved && student != null) {
                     Log.d("DB_DEBUG", "Sending email to: " + student.getParentEmail());
                     sendEmail(subject, date, name, student.getParentEmail());

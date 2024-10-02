@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -76,43 +77,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void check(int role, String username, String password) {
-        DataBaseHapler db = new DataBaseHapler(MainActivity.this);
-        boolean found = false;
+        try {
+            DataBaseHapler db = new DataBaseHapler(MainActivity.this);
+            boolean found = false;
 
-        if (role == 0) { // teacher
-            List<TeacherModel> teachers = db.getAllTeachers();
-            for (TeacherModel teacher : teachers) {
-                if (teacher.getUser().equals(username) && teacher.getPass().equals(password)) {
-                    found = true;
-                    Intent intent = new Intent(MainActivity.this, Teacher.class);
-                    startActivity(intent);
-                    break;
-                }
-            }
-            if (!found) {
-                Toast.makeText(MainActivity.this, "Username or password is incorrect", Toast.LENGTH_SHORT).show();
-            }
-
-        } else if (role == 1) { // student
-            List<StudentModel> students = db.getAllStudents();
-            for (StudentModel student : students) {
-                if (student.getUser().equals(username) && student.getPass().equals(password)) {
-                    found = true;
-                    if (addname(student.getName())) {
-                        Intent intent = new Intent(MainActivity.this, ScannerQR.class);  // Class for scanning QR codes
+            if (role == 0) { // teacher
+                List<TeacherModel> teachers = db.getAllTeachers();
+                for (TeacherModel teacher : teachers) {
+                    if (teacher.getUser().equals(username) && teacher.getPass().equals(password)) {
+                        found = true;
+                        Intent intent = new Intent(MainActivity.this, Teacher.class);
                         startActivity(intent);
+                        break;
                     }
-                    break;
                 }
-            }
-            if (!found) {
-                Toast.makeText(MainActivity.this, "Username or password is incorrect", Toast.LENGTH_SHORT).show();
-            }
+                if (!found) {
+                    Toast.makeText(MainActivity.this, "Username or password is incorrect", Toast.LENGTH_SHORT).show();
+                }
 
-        } else {
-            Toast.makeText(MainActivity.this, "Invalid role, please try again", Toast.LENGTH_SHORT).show();
+            } else if (role == 1) { // student
+                List<StudentModel> students = db.getAllStudents();
+                for (StudentModel student : students) {
+                    if (student.getUser().equals(username) && student.getPass().equals(password)) {
+                        found = true;
+                        if (addname(student.getName())) {
+                            Intent intent = new Intent(MainActivity.this, ScannerQR.class);  // Class for scanning QR codes
+                            startActivity(intent);
+                        }
+                        break;
+                    }
+                }
+                if (!found) {
+                    Toast.makeText(MainActivity.this, "Username or password is incorrect", Toast.LENGTH_SHORT).show();
+                }
+
+            } else {
+                Toast.makeText(MainActivity.this, "Invalid role, please try again", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e("LoginError", "Error during login", e);  // Log the error to identify the issue
         }
     }
+
 
     private boolean addname(String name) {
         SharedPreferences.Editor editor = sharedPreferences.edit();

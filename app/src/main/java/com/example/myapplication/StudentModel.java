@@ -20,12 +20,10 @@ public class StudentModel {
         this.email = email;
         this.parentEmail = parentEmail;
     }
-
-    // Constructor without 'pass' for flexibility
-    public StudentModel(int id, String name, String user, String email, String parentEmail) {
-        this.id = id;
+    public StudentModel(String name, String user, String pass, String email, String parentEmail) {
         this.name = name;
         this.user = user;
+        this.pass = pass;
         this.email = email;
         this.parentEmail = parentEmail;
     }
@@ -94,16 +92,5 @@ public class StudentModel {
 
     public void setParentEmail(String parentEmail) {
         this.parentEmail = parentEmail;
-    }
-
-    // Test method to simulate fetching a list of students
-    public List<StudentModel> getStudents() {
-        List<StudentModel> students = new ArrayList<>();
-        students.add(new StudentModel(1, "John", "john123", "123", "john@example.com", "wisemanmlora@gmail.com"));
-        students.add(new StudentModel(2, "Alice", "alice456", "123", "alice@example.com", "soundavecentral01@gmail.com"));
-        students.add(new StudentModel(3, "Bob", "bob789", "123", "bob@example.com", "parentbob@example.com"));
-        students.add(new StudentModel(4, "Emily", "emily321", "123", "emily@example.com", "parentemily@example.com"));
-
-        return students;
     }
 }

@@ -17,7 +17,7 @@ public class DataBaseHapler extends SQLiteOpenHelper {
 
 
     public DataBaseHapler(@Nullable Context context  ) {
-        super(context, "SystemApp.db", null, 1);
+        super(context, "SystemApp.db", null, 2);
     }
 
     // is was call when first create DB
@@ -32,7 +32,34 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(createAttendanceTable);
     }
 
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 2) {
+            // Check if the column already exists before adding it
+            Cursor cursor = db.rawQuery("PRAGMA table_info(STUDENTS_TABLE)", null);
+            boolean columnExists = false;
+            while (cursor.moveToNext()) {
+                String columnName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                if (columnName.equals("PARENT_EMAIL")) {
+                    columnExists = true;
+                    break;
+                }
+            }
+            cursor.close();
 
+            if (!columnExists) {
+                db.execSQL("ALTER TABLE STUDENTS_TABLE ADD COLUMN PARENT_EMAIL TEXT");
+            }
+        }
+    }
+
+
+
+    public List<TeacherModel> getAllTeachers()
+    {
+        TeacherModel teacherModel = new TeacherModel();
+        return teacherModel.getTeachers();
+    }
 
     public  boolean AddOne_Student(StudentModel model)
     {
@@ -97,32 +124,65 @@ public class DataBaseHapler extends SQLiteOpenHelper {
     }
 
     public List<StudentModel> getAllStudents() {
-        StudentModel studentModel = new StudentModel();
-        return studentModel.getStudents(); // Call to your method to retrieve hard-coded students
+        List<StudentModel> studentsList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM STUDENTS_TABLE";
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
+                    String name = cursor.getString(cursor.getColumnIndexOrThrow("NAME"));
+                    String user = cursor.getString(cursor.getColumnIndexOrThrow("USER"));
+                    String pass = cursor.getString(cursor.getColumnIndexOrThrow("PASS"));
+                    String email = cursor.getString(cursor.getColumnIndexOrThrow("STUDENT_EMAIL"));
+                    String parentEmail = cursor.getString(cursor.getColumnIndexOrThrow("PARENT_EMAIL"));
+
+                    Log.d("DB_DEBUG", "Retrieved student: " + name);
+
+                    StudentModel student = new StudentModel(id, name, user, pass, email, parentEmail);
+                    studentsList.add(student);
+                } catch (Exception e) {
+                    Log.e("DB_ERROR", "Error while fetching student data", e);
+                }
+
+            } while (cursor.moveToNext());
+        } else {
+            Log.d("DB_DEBUG", "No students found in the database");
+        }
+
+        cursor.close();
+        db.close();
+
+        return studentsList;
     }
 
 
 
-    public StudentModel getStudentById(int id) {
+
+
+    public StudentModel getStudentByName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         StudentModel student = null;
 
-        // Query to get student by ID
+        // Query to get student by name
         Cursor cursor = null;
         try {
-            cursor = db.rawQuery("SELECT * FROM STUDENTS_TABLE WHERE ID = ?", new String[]{String.valueOf(id)});
+            cursor = db.rawQuery("SELECT * FROM STUDENTS_TABLE WHERE NAME = ?", new String[]{name});
 
             // If we find a student, create a StudentModel object
             if (cursor != null && cursor.moveToFirst()) {
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("NAME"));
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("ID"));
                 String user = cursor.getString(cursor.getColumnIndexOrThrow("USER"));
                 String pass = cursor.getString(cursor.getColumnIndexOrThrow("PASS"));
-                String email = cursor.getString(cursor.getColumnIndexOrThrow("EMAIL"));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow("STUDENT_EMAIL")); // Update column name here
                 String parentEmail = cursor.getString(cursor.getColumnIndexOrThrow("PARENT_EMAIL"));
 
                 student = new StudentModel(id, name, user, pass, email, parentEmail);
             } else {
-                Log.d("DB_DEBUG", "No student found with ID: " + id);
+                Log.d("DB_DEBUG", "No student found with name: " + name);
             }
         } catch (Exception e) {
             Log.e("DB_ERROR", "Error retrieving student", e);
@@ -136,20 +196,6 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         return student;
     }
 
-
-
-
-    // is call when DB version is changed
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-    }
-
-    public List<TeacherModel> getAllTeachers()
-    {
-        TeacherModel teacherModel = new TeacherModel();
-        return teacherModel.getTeachers();
-    }
 
 
     public List<AttendanceModel> getAllAttendance()

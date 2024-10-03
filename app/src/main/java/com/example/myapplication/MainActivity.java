@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,11 +21,12 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.List;
 
 // Import ScannerQR class
-import com.example.myapplication.ScannerQR;
+
 
 public class MainActivity extends AppCompatActivity {
     Button btnsubmit;
     EditText user, pass;
+    TextView TxtAdmin;
     SharedPreferences sharedPreferences;
 
     @Override
@@ -50,6 +52,15 @@ public class MainActivity extends AppCompatActivity {
         pass = findViewById(R.id.pass);
 
         btnsubmit = findViewById(R.id.submit);
+        TxtAdmin = findViewById(R.id.TxtAdmin);
+
+        TxtAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreateAdminActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +78,10 @@ public class MainActivity extends AppCompatActivity {
                         // Start GenerateQRActivity
                         check(0, user.getText().toString().toLowerCase(), pass.getText().toString().toLowerCase());
 
-                    }else {
+                    }else if (selectedRole.equals("Admin")) {
+                        // Start GenerateQRActivity
+                        check(2, user.getText().toString().toLowerCase(), pass.getText().toString().toLowerCase());
+                    } else {
                         // Show toast message to select a role
                         Toast.makeText(MainActivity.this, "Please select a role", Toast.LENGTH_SHORT).show();
                     }
@@ -102,6 +116,22 @@ public class MainActivity extends AppCompatActivity {
                         found = true;
                         if (addname(student.getName())) {
                             Intent intent = new Intent(MainActivity.this, ScannerQR.class);  // Class for scanning QR codes
+                            startActivity(intent);
+                        }
+                        break;
+                    }
+                }
+                if (!found) {
+                    Toast.makeText(MainActivity.this, "Username or password is incorrect", Toast.LENGTH_SHORT).show();
+                }
+
+            } else if (role == 2) { // admin
+                List<AdminModel> admins = db.getAllAdmins();
+                for (AdminModel admin : admins) {
+                    if (admin.getUser().equals(username) && admin.getPass().equals(password)) {
+                        found = true;
+                        if (addname(admin.getName())) {
+                            Intent intent = new Intent(MainActivity.this, AdminDashboardActivity.class);  // Class for scanning QR codes
                             startActivity(intent);
                         }
                         break;

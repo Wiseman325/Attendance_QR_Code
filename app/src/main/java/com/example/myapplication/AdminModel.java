@@ -1,26 +1,26 @@
 package com.example.myapplication;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class TeacherModel {
+public class AdminModel {
     private int id;
     private String name;
     private String user;
-    private String email;  // New field for teacher email
     private String pass;
 
     // Constructor with parameters
-    public TeacherModel(int id, String name, String user, String email, String pass) {
+    public AdminModel(int id, String name, String user, String pass) {
         this.id = id;
         this.name = name;
         this.user = user;
-        this.email = email; // Added email field
+        this.pass = pass;
+    }
+    public AdminModel(String name, String user, String pass) {
+        this.name = name;
+        this.user = user;
         this.pass = pass;
     }
 
     // Default constructor
-    public TeacherModel() {
+    public AdminModel() {
     }
 
     // Override toString for easier debugging
@@ -30,7 +30,6 @@ public class TeacherModel {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", user='" + user + '\'' +
-                ", email='" + email + '\'' + // Added email to the string representation
                 ", pass='" + pass + '\'' +
                 '}';
     }
@@ -60,14 +59,6 @@ public class TeacherModel {
         this.user = user;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPass() {
         return pass;
     }
@@ -76,14 +67,4 @@ public class TeacherModel {
         this.pass = pass;
     }
 
-    // Temporary method for testing purposes to return a list of teachers
-//    public List<TeacherModel> getTeachers() {
-//        List<TeacherModel> teachers = new ArrayList<>();
-//        teachers.add(new TeacherModel(1, "Kamil", "kamil123", "kamil@example.com", "123"));
-//        teachers.add(new TeacherModel(2, "Riad", "riad456", "riad@example.com", "123"));
-//        teachers.add(new TeacherModel(3, "Ahmed", "ahmed24", "ahmed@example.com", "123"));
-//        teachers.add(new TeacherModel(4, "Ali", "ali322", "ali@example.com", "123"));
-//
-//        return teachers;
-//    }
 }

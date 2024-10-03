@@ -23,7 +23,21 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
-
+        <activity
+            android:name=".CreateAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewReportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ManageUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity_admin_dashboard"
+            android:exported="false" />
         <activity
             android:name=".Attendance"
             android:exported="true" />

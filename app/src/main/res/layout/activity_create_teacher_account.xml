@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:id="@+id/main"
+android:padding="16dp">
+
+<EditText
+    android:id="@+id/teacherName"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Teacher Name" />
+
+<EditText
+    android:id="@+id/teacherEmail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Teacher Email" />
+
+<EditText
+    android:id="@+id/teacherUsername"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Teacher Username" />
+
+<EditText
+    android:id="@+id/teacherPassword"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Password"
+    android:inputType="textPassword" />
+
+<Button
+    android:id="@+id/createTeacherBtn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Create Teacher" />
+</LinearLayout>

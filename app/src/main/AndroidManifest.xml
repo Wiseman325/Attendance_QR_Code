@@ -24,6 +24,12 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".CreateStudentAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateTeacherAccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreateAdminActivity"
             android:exported="false" />
         <activity

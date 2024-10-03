@@ -18,6 +18,12 @@ public class TeacherModel {
         this.email = email; // Added email field
         this.pass = pass;
     }
+    public TeacherModel(String name, String user, String email, String pass) {
+        this.name = name;
+        this.user = user;
+        this.email = email; // Added email field
+        this.pass = pass;
+    }
 
     // Default constructor
     public TeacherModel() {

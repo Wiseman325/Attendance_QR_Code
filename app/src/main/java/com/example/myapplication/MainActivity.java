@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     if (admin.getUser().equals(username) && admin.getPass().equals(password)) {
                         found = true;
                         if (addname(admin.getName())) {
+                            Log.d("LOGIN_DEBUG", "Admin login successful. Starting AdminDashboardActivity");
                             Intent intent = new Intent(MainActivity.this, AdminDashboardActivity.class);  // Class for scanning QR codes
                             startActivity(intent);
                         }
@@ -154,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("name", name);
         editor.apply();
+        Log.d("SharedPreferences", "Saved name to SharedPreferences: " + name);
         return true;
     }
 }

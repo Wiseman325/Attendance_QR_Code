@@ -17,14 +17,14 @@ public class DataBaseHapler extends SQLiteOpenHelper {
 
 
     public DataBaseHapler(@Nullable Context context  ) {
-        super(context, "SystemApp.db", null, 2);
+        super(context, "SystemApp.db", null, 3);
     }
 
     // is was call when first create DB
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createStudentsTable = "CREATE TABLE STUDENTS_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT, EMAIL TEXT, PARENT_EMAIL TEXT)";
-        String createTeacherTable = "CREATE TABLE TEACHER_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT)";
+        String createTeacherTable = "CREATE TABLE TEACHER_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, EMAIL TEXT, PASS TEXT)";
         String createAttendanceTable = "CREATE TABLE ATTENDANCE_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, STUDENTNAME TEXT, SUBJECT TEXT, DATE TEXT)";
         String createAdminTable = "CREATE TABLE ADMIN_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT)";
 
@@ -36,7 +36,7 @@ public class DataBaseHapler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 2) {
+        if (oldVersion < 3) {
             // Check if the column already exists before adding it
             Cursor cursor = db.rawQuery("PRAGMA table_info(STUDENTS_TABLE)", null);
             boolean columnExists = false;
@@ -52,6 +52,22 @@ public class DataBaseHapler extends SQLiteOpenHelper {
             if (!columnExists) {
                 db.execSQL("ALTER TABLE STUDENTS_TABLE ADD COLUMN PARENT_EMAIL TEXT");
             }
+
+            // Add EMAIL to TEACHER_TABLE if needed
+            cursor = db.rawQuery("PRAGMA table_info(TEACHER_TABLE)", null);
+            columnExists = false;
+            while (cursor.moveToNext()) {
+                String columnName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                if (columnName.equals("EMAIL")) {
+                    columnExists = true;
+                    break;
+                }
+            }
+            cursor.close();
+
+            if (!columnExists) {
+                db.execSQL("ALTER TABLE TEACHER_TABLE ADD COLUMN EMAIL TEXT");
+            }
         }
     }
 
@@ -59,10 +75,19 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("NAME", adminModel.getName());
-        values.put("USER", adminModel.getUser());
+        String lowercaseUsername = adminModel.getUser().toLowerCase();
+        values.put("USER", lowercaseUsername);
         values.put("PASS", adminModel.getPass());
 
+        Log.d("DB_INSERT", "Inserting admin: " + adminModel.getName() + ", User: " + adminModel.getUser());
+
         long result = db.insert("ADMIN_TABLE", null, values);
+
+        if (result == -1) {
+            Log.d("DB_INSERT", "Admin insertion failed"); // Log if insertion failed
+        } else {
+            Log.d("DB_INSERT", "Admin inserted successfully with ID: " + result); // Log success
+        }
 
         db.close();
 
@@ -124,12 +149,6 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         return admin;
     }
 
-//    public List<TeacherModel> getAllTeachers()
-//    {
-//        TeacherModel teacherModel = new TeacherModel();
-//        return teacherModel.getTeachers();
-//    }
-
     public List<TeacherModel> getAllTeachers() {
         List<TeacherModel> teachersList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -174,37 +193,42 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         value.put("PASS",model.getPass());
         value.put("STUDENT_EMAIL", model.getEmail());  // Add this line
         value.put("PARENT_EMAIL", model.getParentEmail());
+        Log.d("DB_DEBUG", "Inserting student: " + model.getName());
 
         long insert = db.insert("STUDENTS_TABLE",null,value);
         if (insert == -1)
         {
+            Log.e("DB_DEBUG", "Error inserting student");
             return false;
         }
         else
         {
+            Log.d("DB_DEBUG", "Student inserted successfully with ID: " + insert);
             return true;
         }
 
     }
 
-    public  boolean AddOne_Teacher(TeacherModel model)
-    {
+    public boolean AddOne_Teacher(TeacherModel model) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues value = new ContentValues();
-        value.put("NAME",model.getName());
-        value.put("USER",model.getUser());
-        value.put("PASS",model.getPass());
+        value.put("NAME", model.getName());
+        value.put("USER", model.getUser());
+        value.put("PASS", model.getPass());
+        value.put("EMAIL", model.getEmail()); // Ensure to add this line
 
-        long insert = db.insert("TEACHER_TABLE",null,value);
-        if (insert == -1)
-        {
+        Log.d("DB_DEBUG", "Inserting teacher: " + model.getName());
+
+        long insert = db.insert("TEACHER_TABLE", null, value);
+        if (insert == -1) {
+            Log.e("DB_DEBUG", "Error inserting teacher");
             return false;
-        }
-        else
-        {
+        } else {
+            Log.d("DB_DEBUG", "Teacher inserted successfully with ID: " + insert);
             return true;
         }
     }
+
 
     public  boolean AddOne_Attendance(AttendanceModel model)
     {

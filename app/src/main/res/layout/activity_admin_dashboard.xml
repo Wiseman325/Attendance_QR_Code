@@ -3,55 +3,97 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/pagebkg"
     android:orientation="vertical"
     android:id="@+id/main"
     android:padding="16dp">
 
+    <!-- Welcome Text -->
     <TextView
         android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Welcome, Admin"
+        android:layout_marginTop="130dp"
+        android:layout_gravity="center"
+        android:textColor="@color/DarkGreen"
+        android:padding="6dp"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
         android:paddingBottom="16dp" />
 
-    <Button
-        android:id="@+id/manageUsersBtn"
-        android:layout_width="match_parent"
+    <!-- Grid Layout for Buttons -->
+    <GridLayout
+        android:background="@drawable/component_backgrounds"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:text="Manage Users"
-        android:padding="12dp"
-        android:layout_marginBottom="12dp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="24dp"
+        android:columnCount="2"
+        android:rowCount="2">
 
-    <Button
-        android:id="@+id/viewReportsBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="View Reports"
-        android:padding="12dp"
-        android:layout_marginBottom="12dp" />
-    <Button
-        android:id="@+id/createTeacherAccountBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Teacher Account"
-        android:padding="12dp"
-        android:layout_marginBottom="12dp" />
+        <!-- Manage Users Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/manageUsersBtn"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            android:text="Manage Users"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/createStudentAccountBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create Student Account"
-        android:padding="12dp"
-        android:layout_marginBottom="12dp" />
+        <!-- View Reports Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/viewReportsBtn"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            android:text="View Reports"
+            android:textStyle="bold" />
 
-    <Button
+        <!-- Create Teacher Account Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/createTeacherAccountBtn"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            android:text="Create Teacher"
+            android:textStyle="bold" />
+
+        <!-- Create Student Account Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/createStudentAccountBtn"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            android:text="Create Student"
+            android:textStyle="bold" />
+    </GridLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/logoutBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:padding="12dp" />
+        style="@android:style/Widget.Button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/button_background"
+        android:text="Book"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"/>
+
+
 </LinearLayout>

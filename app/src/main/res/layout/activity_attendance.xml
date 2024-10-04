@@ -26,18 +26,24 @@
         android:id="@+id/students"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:layout_width="385sp"
-        android:layout_height="450dp"
-        android:background="@drawable/lavender_border"/>
+        android:layout_width="350sp"
+        android:layout_height="550dp"
+        android:textAlignment="center"
+        android:background="@drawable/component_backgrounds"/>
 
-    <Button
+
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/vlauseall"
+        style="@android:style/Widget.Button"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/button_background"
         android:text="View All"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
         android:textStyle="bold"
-        android:textSize="20dp" />
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>

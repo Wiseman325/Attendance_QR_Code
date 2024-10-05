@@ -11,23 +11,44 @@
     android:layout_centerHorizontal="true"
     android:gravity="center">
 
+    <!-- Grid Layout for Buttons -->
+    <GridLayout
+        android:background="@drawable/component_backgrounds"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="24dp"
+        android:columnCount="1"
+        android:rowCount="2">
 
 
-    <Button
-        android:id="@+id/gotoGentratedQR"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="Genrate Code" />
+        <!-- Manage Users Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/gotoGentratedQR"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            android:text="Genrate Code"
+            android:textStyle="bold" />
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
 
-        />
-    <Button
-        android:id="@+id/gotoattendance"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="View attendance" />
+        <!-- View Reports Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/gotoattendance"
+            android:layout_width="50dp"
+            android:layout_height="75dp"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:background="@drawable/button_background"
+            android:padding="12dp"
+            android:text="View attendance"
+            android:textStyle="bold" />
+
+
+    </GridLayout>
 
 </LinearLayout>

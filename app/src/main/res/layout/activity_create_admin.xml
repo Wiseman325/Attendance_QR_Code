@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textColor="@color/DarkGreen"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="150dp"
         android:padding="10dp"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -26,14 +26,14 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         android:layout_marginBottom="24dp"
         android:columnCount="1"
         android:rowCount="5">
 
         <EditText
             android:id="@+id/adminName"
-            android:layout_width="330dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="50dp"
@@ -46,7 +46,7 @@
 
         <EditText
             android:id="@+id/adminUsername"
-            android:layout_width="330dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
@@ -59,7 +59,7 @@
 
         <EditText
             android:id="@+id/adminPassword"
-            android:layout_width="330dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button_background"
@@ -78,9 +78,9 @@
         style="@android:style/Widget.Button"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="65dp"
         android:background="@drawable/button_background"
-        android:text="Creat"
+        android:text="Create"
         android:textColor="#ffffff"
         android:textSize="25sp"
         android:textStyle="bold"

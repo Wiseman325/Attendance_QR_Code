@@ -12,6 +12,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class CreateTeacherAccountActivity extends AppCompatActivity {
     EditText teacherName, teacherEmail, teacherUsername, teacherPassword;
     Button createTeacherBtn;
@@ -59,7 +68,7 @@ public class CreateTeacherAccountActivity extends AppCompatActivity {
                 if (success) {
                     Log.d(TAG, "Teacher added successfully to the database");
                     // Send email with login credentials
-                    sendLoginDetailsEmail(email, username, password);
+                    sendLoginDetailsEmail(email, username, password, name);
                     Intent intent = new Intent(CreateTeacherAccountActivity.this, AdminDashboardActivity.class);
                     startActivity(intent);
                     Toast.makeText(CreateTeacherAccountActivity.this, "Teacher created successfully", Toast.LENGTH_SHORT).show();
@@ -71,10 +80,45 @@ public class CreateTeacherAccountActivity extends AppCompatActivity {
         });
     }
 
-    private void sendLoginDetailsEmail(String email, String username, String password) {
-        // Logic to send an email to the teacher
-        Log.d(TAG, "Sending email to " + email);
-        // You can use an email service like SMTP or any email API
-        // e.g., Gmail, SendGrid, or any backend email service
+    private void sendLoginDetailsEmail(String email, String username, String password, String teacherName) {
+        // Using the email logic from the ScannerQR activity
+        new Thread(() -> {
+            try {
+                Properties props = new Properties();
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.socketFactory.port", "465");
+                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.port", "465");
+
+                String userEmail = "sibekonkululeko706@gmail.com";  // Use your email
+                String userPassword = "lbab dxdf ycrn zihb";  // Use your app password
+
+                Session session = Session.getInstance(props, new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(userEmail, userPassword);
+                    }
+                });
+
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(userEmail));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));  // Send email to teacher
+                message.setSubject("Teacher Account Created");
+                message.setText("Dear " + teacherName + ",\n\n" +
+                        "Your account has been successfully created with the following details:\n" +
+                        "Username: " + username + "\n" +
+                        "Password: " + password + "\n\n" +
+                        "Please use these credentials to log in.\n\n" +
+                        "Best regards,\nAdmin Team");
+
+                Transport.send(message);
+
+                runOnUiThread(() -> Toast.makeText(CreateTeacherAccountActivity.this, "Login details sent to " + email, Toast.LENGTH_SHORT).show());
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(CreateTeacherAccountActivity.this, "Failed to send email.", Toast.LENGTH_SHORT).show());
+            }
+        }).start();
     }
 }

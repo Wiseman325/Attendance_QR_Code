@@ -1,40 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:id="@+id/main"
-android:padding="16dp">
-
-<EditText
-    android:id="@+id/teacherName"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Teacher Name" />
+    android:layout_height="match_parent"
+    android:background="@drawable/pagebkg"
+    android:orientation="vertical"
+    android:id="@+id/main"
+    android:padding="16dp">
 
-<EditText
-    android:id="@+id/teacherEmail"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Teacher Email" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/DarkGreen"
+        android:layout_marginTop="120dp"
+        android:padding="10dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="Create, Teacher"
+        android:paddingBottom="16dp" />
 
-<EditText
-    android:id="@+id/teacherUsername"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Teacher Username" />
+    <GridLayout
+        android:background="@drawable/component_backgrounds"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="24dp"
+        android:columnCount="1"
+        android:rowCount="5">
 
-<EditText
-    android:id="@+id/teacherPassword"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Password"
-    android:inputType="textPassword" />
 
-<Button
-    android:id="@+id/createTeacherBtn"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Create Teacher" />
+        <EditText
+            android:id="@+id/teacherName"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:hint="Enter Name"
+            android:inputType="textPersonName"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/teacherEmail"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:hint="Enter Email"
+            android:inputType="textPersonName"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/teacherUsername"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:hint="Teacher's Username"
+            android:inputType="textPersonName"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/teacherPassword"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="50dp"
+            android:textColor="@color/white"
+            android:background="@drawable/button_background"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="12dp" />
+
+
+    </GridLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/createTeacherBtn"
+        style="@android:style/Widget.Button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_background"
+        android:text="Create"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"/>
+
 </LinearLayout>

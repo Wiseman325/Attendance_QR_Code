@@ -26,8 +26,7 @@
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_marginVertical="40dp"
-        android:padding="3dp"
-        />
+        android:padding="3dp" />
 
     <ImageView
         android:id="@+id/qr"
@@ -35,12 +34,21 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="40dp"
         android:scaleType="fitCenter"
-        android:background="@drawable/lavender_border"
-        />
+        android:background="@drawable/lavender_border" />
 
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/genrate"
+        style="@android:style/Widget.Button"
         android:layout_width="200dp"
-        android:layout_height="60dp"
-        android:text="Genrate Code" />
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_background"
+        android:text="Start"
+        android:textColor="#ffffff"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"/>
+
+
 </LinearLayout>

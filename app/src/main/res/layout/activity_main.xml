@@ -31,6 +31,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Login"
                 android:textSize="36sp"
                 android:textAlignment="center"
@@ -42,9 +43,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
-
-                android:background="@drawable/lavender_border"
+                android:background="@drawable/button_background"
                 android:padding="8dp"
+                android:textColor="@color/white"
                 android:spinnerMode="dropdown"/>
 
 
@@ -52,41 +53,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/user"
-                android:background="@drawable/lavender_border"
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
                 android:hint="Username"
                 android:drawableLeft="@drawable/ic_baseline_person_pin_24"
                 android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/white"
+                android:background="@drawable/button_background"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:id="@+id/pass"
-                android:background="@drawable/lavender_border"
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
                 android:hint="Password"
                 android:inputType="textPassword"
+                android:layout_marginBottom="25sp"
                 android:drawableLeft="@drawable/lock_alt_svgrepo_com"
                 android:drawablePadding="8dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/white"
+                android:background="@drawable/button_background"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Login"
+
+            <!-- Login Button -->
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/submit"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="355dp"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_background"
+                android:padding="12dp"
                 android:textSize="18sp"
-                android:layout_marginTop="30dp"
-                app:cornerRadius="20dp"/>
+                android:text="Login"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Admin Login"
-                android:textSize="18dp"
+                android:textSize="23dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/DarkGreen"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:id="@+id/TxtAdmin"
                 />

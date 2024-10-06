@@ -26,6 +26,8 @@
         android:layout_width="280dp"
         android:layout_height="50dp"
         android:layout_marginVertical="40dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_background"
         android:padding="3dp" />
 
     <ImageView

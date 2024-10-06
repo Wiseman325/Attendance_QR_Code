@@ -60,7 +60,7 @@ public class Attendance extends AppCompatActivity {
 
                     if (models.isEmpty())
                     {
-                        Toast.makeText(Attendance.this, "is not have any data yet !!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Attendance.this, "The is no students data on the database yet!!", Toast.LENGTH_SHORT).show();
 
                     }
                     else

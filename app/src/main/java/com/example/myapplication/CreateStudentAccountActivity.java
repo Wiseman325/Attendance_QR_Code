@@ -12,6 +12,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class CreateStudentAccountActivity extends AppCompatActivity {
 
     EditText studentName, studentEmail, parentEmail, studentUsername, studentPassword;
@@ -52,11 +61,6 @@ public class CreateStudentAccountActivity extends AppCompatActivity {
             String username = studentUsername.getText().toString();
             String password = studentPassword.getText().toString();
 
-            Log.d(TAG, "onClick: Student Name: " + name);
-            Log.d(TAG, "onClick: Student Email: " + email);
-            Log.d(TAG, "onClick: Parent Email: " + parentEmailValue);
-            Log.d(TAG, "onClick: Student Username: " + username);
-
             // Check for empty fields
             if (name.isEmpty() || email.isEmpty() || parentEmailValue.isEmpty() || username.isEmpty() || password.isEmpty()) {
                 Log.w(TAG, "onClick: One or more fields are empty");
@@ -69,7 +73,7 @@ public class CreateStudentAccountActivity extends AppCompatActivity {
                 if (success) {
                     Log.d(TAG, "onClick: Student created successfully in the database");
                     // Notify the user that the student account was created
-                    sendLoginDetailsEmail(email, username, password);
+                    sendLoginDetailsEmail(email, username, password, parentEmailValue);
                     Intent intent = new Intent(CreateStudentAccountActivity.this, AdminDashboardActivity.class);
                     startActivity(intent);
                     Toast.makeText(CreateStudentAccountActivity.this, "Student created successfully", Toast.LENGTH_SHORT).show();
@@ -81,10 +85,41 @@ public class CreateStudentAccountActivity extends AppCompatActivity {
         });
     }
 
-    private void sendLoginDetailsEmail(String email, String username, String password) {
-        // Logic to send an email to the teacher
-        Log.d(TAG, "Sending email to " + email);
-        // You can use an email service like SMTP or any email API
-        // e.g., Gmail, SendGrid, or any backend email service
+    // Method to send an email using JavaMail API
+    private void sendLoginDetailsEmail(final String studentEmail, final String username, final String password, final String parentEmail) {
+        new Thread(() -> {
+            try {
+                Properties props = new Properties();
+                props.put("mail.smtp.host", "smtp.gmail.com");
+                props.put("mail.smtp.socketFactory.port", "465");
+                props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.port", "465");
+
+                String userEmail = "sibekonkululeko706@gmail.com"; // Update with your email
+                String userPassword = "lbab dxdf ycrn zihb"; // Update with your app-specific password
+
+                Session session = Session.getInstance(props, new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(userEmail, userPassword);
+                    }
+                });
+
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(userEmail));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(studentEmail)); // Student's email
+                message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(parentEmail)); // Parent's email
+                message.setSubject("Student Account Created");
+                message.setText("Dear Student,\n\nYour student account has been created successfully. Below are your login details:\n\nUsername: " + username + "\nPassword: " + password + "\n\nPlease keep these credentials safe and confidential. If you have any questions or need further assistance, feel free to reach out to us.\n\nBest regards,\nSchool Administration");
+
+                Transport.send(message);
+
+                runOnUiThread(() -> Toast.makeText(CreateStudentAccountActivity.this, "Email sent successfully!", Toast.LENGTH_SHORT).show());
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(CreateStudentAccountActivity.this, "Failed to send email.", Toast.LENGTH_SHORT).show());
+            }
+        }).start();
     }
 }

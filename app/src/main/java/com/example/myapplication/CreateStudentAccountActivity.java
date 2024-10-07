@@ -32,7 +32,7 @@ public class CreateStudentAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: Activity started");
+        Log.d("DB_DEBUG", "onCreate: Activity started");
         setContentView(R.layout.activity_create_student_account);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -50,11 +50,11 @@ public class CreateStudentAccountActivity extends AppCompatActivity {
         studentPassword = findViewById(R.id.studentPassword);
         createStudentBtn = findViewById(R.id.createStudentBtn);
 
-        Log.d(TAG, "onCreate: Views initialized");
+        Log.d("DB_DEBUG", "onCreate: Views initialized");
 
         // Set the create student button click listener
         createStudentBtn.setOnClickListener(v -> {
-            Log.d(TAG, "CreateStudentBtn clicked");
+            Log.d("DB_DEBUG", "CreateStudentBtn clicked");
             String name = studentName.getText().toString();
             String email = studentEmail.getText().toString();
             String parentEmailValue = parentEmail.getText().toString();
@@ -63,7 +63,7 @@ public class CreateStudentAccountActivity extends AppCompatActivity {
 
             // Check for empty fields
             if (name.isEmpty() || email.isEmpty() || parentEmailValue.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                Log.w(TAG, "onClick: One or more fields are empty");
+                Log.w("DB_DEBUG", "onClick: One or more fields are empty");
                 Toast.makeText(CreateStudentAccountActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else {
                 // Save student details in the database
@@ -71,14 +71,14 @@ public class CreateStudentAccountActivity extends AppCompatActivity {
                 boolean success = dbHelper.AddOne_Student(studentModel);
 
                 if (success) {
-                    Log.d(TAG, "onClick: Student created successfully in the database");
+                    Log.d("DB_DEBUG", "onClick: Student created successfully in the database");
                     // Notify the user that the student account was created
                     sendLoginDetailsEmail(email, username, password, parentEmailValue);
                     Intent intent = new Intent(CreateStudentAccountActivity.this, AdminDashboardActivity.class);
                     startActivity(intent);
                     Toast.makeText(CreateStudentAccountActivity.this, "Student created successfully", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.e(TAG, "onClick: Error creating student");
+                    Log.e("DB_DEBUG", "onClick: Error creating student");
                     Toast.makeText(CreateStudentAccountActivity.this, "Error creating student", Toast.LENGTH_SHORT).show();
                 }
             }

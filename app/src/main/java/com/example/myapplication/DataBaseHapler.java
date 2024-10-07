@@ -23,7 +23,7 @@ public class DataBaseHapler extends SQLiteOpenHelper {
     // is was call when first create DB
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createStudentsTable = "CREATE TABLE STUDENTS_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT, EMAIL TEXT, PARENT_EMAIL TEXT)";
+        String createStudentsTable = "CREATE TABLE STUDENTS_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT, STUDENT_EMAIL TEXT, PARENT_EMAIL TEXT)";
         String createTeacherTable = "CREATE TABLE TEACHER_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, EMAIL TEXT, PASS TEXT)";
         String createAttendanceTable = "CREATE TABLE ATTENDANCE_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, STUDENTNAME TEXT, SUBJECT TEXT, DATE TEXT)";
         String createAdminTable = "CREATE TABLE ADMIN_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, PASS TEXT)";
@@ -36,7 +36,7 @@ public class DataBaseHapler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 3) {
+        if (oldVersion < 4) {
             // Check if the column already exists before adding it
             Cursor cursor = db.rawQuery("PRAGMA table_info(STUDENTS_TABLE)", null);
             boolean columnExists = false;
@@ -49,9 +49,27 @@ public class DataBaseHapler extends SQLiteOpenHelper {
             }
             cursor.close();
 
+
             if (!columnExists) {
                 db.execSQL("ALTER TABLE STUDENTS_TABLE ADD COLUMN PARENT_EMAIL TEXT");
             }
+
+
+            Cursor cursor1 = db.rawQuery("PRAGMA table_info(STUDENTS_TABLE)", null);
+            boolean studentEmailExists = false;
+            while (cursor1.moveToNext()) {
+                String columnName = cursor1.getString(cursor1.getColumnIndexOrThrow("name"));
+                if (columnName.equals("STUDENT_EMAIL")) {
+                    studentEmailExists = true;
+                    break;
+                }
+            }
+            cursor1.close();
+
+            if (!studentEmailExists) {
+                db.execSQL("ALTER TABLE STUDENTS_TABLE ADD COLUMN STUDENT_EMAIL TEXT");
+            }
+
 
             // Add EMAIL to TEACHER_TABLE if needed
             cursor = db.rawQuery("PRAGMA table_info(TEACHER_TABLE)", null);
@@ -214,8 +232,12 @@ public class DataBaseHapler extends SQLiteOpenHelper {
         ContentValues value = new ContentValues();
         value.put("NAME", model.getName());
         value.put("USER", model.getUser());
-        value.put("PASS", model.getPass());
         value.put("EMAIL", model.getEmail()); // Ensure to add this line
+        value.put("PASS", model.getPass());
+
+
+        String createTeacherTable = "CREATE TABLE TEACHER_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, USER TEXT, EMAIL TEXT, PASS TEXT)";
+
 
         Log.d("DB_DEBUG", "Inserting teacher: " + model.getName());
 

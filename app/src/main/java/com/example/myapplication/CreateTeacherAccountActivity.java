@@ -39,7 +39,7 @@ public class CreateTeacherAccountActivity extends AppCompatActivity {
         });
 
         dbHelper = new DataBaseHapler(this);
-        Log.d(TAG, "Database helper initialized");
+        Log.d("DB_DEBUG", "Database helper initialized");
 
         teacherName = findViewById(R.id.teacherName);
         teacherEmail = findViewById(R.id.teacherEmail);
@@ -53,27 +53,27 @@ public class CreateTeacherAccountActivity extends AppCompatActivity {
             String username = teacherUsername.getText().toString();
             String password = teacherPassword.getText().toString();
 
-            Log.d(TAG, "Create Teacher Button Clicked");
+            Log.d("DB_DEBUG", "Create Teacher Button Clicked");
 
             if (name.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                Log.w(TAG, "One or more fields are empty");
+                Log.w("DB_DEBUG", "One or more fields are empty");
                 Toast.makeText(CreateTeacherAccountActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else {
                 // Save teacher details in the database
                 TeacherModel teacherModel = new TeacherModel(name, username, password, email);
-                Log.d(TAG, "TeacherModel created: " + teacherModel.toString());
+                Log.d("DB_DEBUG", "TeacherModel created: " + teacherModel.toString());
 
                 boolean success = dbHelper.AddOne_Teacher(teacherModel);
 
                 if (success) {
-                    Log.d(TAG, "Teacher added successfully to the database");
+                    Log.d("DB_DEBUG", "Teacher added successfully to the database");
                     // Send email with login credentials
                     sendLoginDetailsEmail(email, username, password, name);
                     Intent intent = new Intent(CreateTeacherAccountActivity.this, AdminDashboardActivity.class);
                     startActivity(intent);
                     Toast.makeText(CreateTeacherAccountActivity.this, "Teacher created successfully", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.e(TAG, "Error adding teacher to the database");
+                    Log.e("DB_DEBUG", "Error adding teacher to the database");
                     Toast.makeText(CreateTeacherAccountActivity.this, "Error creating teacher", Toast.LENGTH_SHORT).show();
                 }
             }

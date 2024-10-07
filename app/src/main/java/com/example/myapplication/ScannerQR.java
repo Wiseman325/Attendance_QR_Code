@@ -102,10 +102,20 @@ public class ScannerQR extends AppCompatActivity {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(userEmail));
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(parentEmail)); // Parent's email
-                message.setSubject("New QR Code Registration");
-                message.setText("Dear Parent \n I hope this email finds you well. \n This is to inform you that your child," + name + "attended school today. Below are the details of the attendance: " + "\nDate with time in: " + date + "\n\nWe kindly request that you keep this record for your reference. If you have any questions or concerns, please do not hesitate to reach out to the school administration.");
+                message.setSubject("Attendance Confirmation for Your Child");
+                message.setText(
+                        "Dear Parent,\n\n" +
+                                "I hope this email finds you well.\n\n" +
+                                "We are writing to inform you that your child, " + name +
+                                ", attended school today. Please find the attendance details below:\n\n" +
+                                "Date and Time of Attendance: " + date + "\n\n" +
+                                "Kindly keep this information for your records. Should you have any questions or concerns, feel free to contact the school administration at your convenience.\n\n" +
+                                "Best regards,\n" +
+                                "School Administration"
+                );
 
                 Transport.send(message);
+
 
                 runOnUiThread(() -> Toast.makeText(ScannerQR.this, "Email sent successfully!", Toast.LENGTH_SHORT).show());
             } catch (Exception e) {

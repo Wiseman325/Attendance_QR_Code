@@ -108,8 +108,8 @@ public class CreateStudentAccountActivity extends AppCompatActivity {
 
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(userEmail));
-                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(studentEmail)); // Student's email
-                message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(parentEmail)); // Parent's email
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(parentEmail)); // Student's email
+                message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(studentEmail)); // Parent's email
                 message.setSubject("Student Account Created");
                 message.setText("Dear Student,\n\nYour student account has been created successfully. Below are your login details:\n\nUsername: " + username + "\nPassword: " + password + "\n\nPlease keep these credentials safe and confidential. If you have any questions or need further assistance, feel free to reach out to us.\n\nBest regards,\nSchool Administration");
 

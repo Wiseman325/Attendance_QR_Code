@@ -33,23 +33,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
         String adminName = sharedPreferences.getString("name", "Admin");
 
         welcomeText = findViewById(R.id.welcomeText);
-        manageUsersBtn = findViewById(R.id.manageUsersBtn);
-        viewReportsBtn = findViewById(R.id.viewReportsBtn);
         logoutBtn = findViewById(R.id.logoutBtn);
         createTeacherAccountBtn = findViewById(R.id.createTeacherAccountBtn);
         createStudentAccountBtn = findViewById(R.id.createStudentAccountBtn);
 
         welcomeText.setText("Welcome, " + adminName);
 
-        manageUsersBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminDashboardActivity.this, ManageUsersActivity.class);
-            startActivity(intent);
-        });
-
-        viewReportsBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(AdminDashboardActivity.this, ViewReportsActivity.class);
-            startActivity(intent);
-        });
 
         logoutBtn.setOnClickListener(v -> {
             SharedPreferences.Editor editor = sharedPreferences.edit();

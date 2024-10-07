@@ -34,29 +34,6 @@
         android:rowCount="2">
 
         <!-- Manage Users Button -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/manageUsersBtn"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:layout_columnWeight="1"
-            android:layout_margin="10dp"
-            android:background="@drawable/button_background"
-            android:padding="12dp"
-            android:text="Manage Users"
-            android:textStyle="bold" />
-
-        <!-- View Reports Button -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/viewReportsBtn"
-            android:layout_width="50dp"
-            android:layout_height="75dp"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            android:background="@drawable/button_background"
-            android:padding="12dp"
-            android:text="View Reports"
-            android:textStyle="bold" />
-
         <!-- Create Teacher Account Button -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/createTeacherAccountBtn"

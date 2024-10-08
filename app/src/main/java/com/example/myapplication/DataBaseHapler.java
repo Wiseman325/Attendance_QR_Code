@@ -377,4 +377,21 @@ public class DataBaseHapler extends SQLiteOpenHelper {
 
     }
 
+
+    public boolean deleteTeacher(int teacherId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete("TEACHER_TABLE", "ID = ?", new String[]{String.valueOf(teacherId)});
+        db.close();
+        return result != -1; // Returns true if delete was successful.
+    }
+
+
+    public boolean deleteStudent(int studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete("STUDENTS_TABLE", "ID = ?", new String[]{String.valueOf(studentId)});
+        db.close();
+        return result != -1; // Returns true if delete was successful.
+    }
+
+
 }
